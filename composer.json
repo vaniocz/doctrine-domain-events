@@ -1,0 +1,41 @@
+{
+    "name": "vanio/doctrine-domain-events",
+    "description": "An extension for Doctrine2 ORM allowing usage of domain events and an ability to call flush inside events triggered by flush.",
+    "keywords": ["doctrine", "doctrine2", "domain events"],
+    "homepage": "https://github.com/vaniocz/doctrine-domain-events",
+    "license": "MIT",
+    "authors": [
+        {"name": "Marek Štípek", "email": "marek.stipek@vanio.cz"}
+    ],
+    "require": {
+        "php": "7.0.*",
+        "doctrine/orm": "^2.5",
+        "vanio/stdlib": "^0.1@dev",
+        "vanio/type-parser": "^0.1@dev"
+    },
+    "require-dev": {
+        "doctrine/orm": "dev-master#9da83cf",
+        "phpunit/phpunit": "^5.5",
+        "vanio/coding-standards": "^0.1@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vanio\\DoctrineDomainEvents\\": "src/"
+        },
+        "exclude-from-classmap": ["/tests/"]
+    },
+    "autoload-dev": {
+        "psr-0": {"Doctrine\\Tests\\": "vendor/doctrine/orm/tests/"},
+        "psr-4": {"Vanio\\DoctrineDomainEvents\\Tests\\": "tests/"}
+    },
+    "scripts": {
+        "test": "\"vendor/bin/phpunit\"",
+        "lint": "\"vendor/bin/phpcs\" --standard=ruleset.xml --extensions=php --encoding=utf-8 --ignore=vendor .",
+        "fix": "\"vendor/bin/phpcbf\" --standard=ruleset.xml --extensions=php --encoding=utf-8 --no-patch --ignore=vendor ."
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    }
+}
