@@ -16,6 +16,9 @@
     "require-dev": {
         "doctrine/orm": "dev-master#9da83cf",
         "phpunit/phpunit": "^5.5",
+        "symfony/dependency-injection": "^3.0",
+        "symfony/config": "^3.0",
+        "symfony/http-kernel": "^3.0",
         "vanio/coding-standards": "^0.1@dev"
     },
     "autoload": {
