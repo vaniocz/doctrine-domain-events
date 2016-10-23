@@ -36,17 +36,6 @@ class DoctrineDomainEventDispatcher implements EventSubscriber
     }
 
     /**
-     * @param array $a
-     * @param array $b
-     * @return int
-     * @internal
-     */
-    public function compareEventsOrder(array $a, array $b): int
-    {
-        return $a[0] <=> $b[0];
-    }
-
-    /**
      * @param object $entity
      */
     private function keepEventProviders($entity)
@@ -62,7 +51,7 @@ class DoctrineDomainEventDispatcher implements EventSubscriber
             return;
         }
 
-        $events = [];
+        $eventsByOrder = [];
 
         foreach ($this->entityManager->getUnitOfWork()->getIdentityMap() as $entities) {
             foreach ($entities as $entity) {
@@ -72,19 +61,21 @@ class DoctrineDomainEventDispatcher implements EventSubscriber
 
         foreach ($this->eventProviders as $eventProvider) {
             foreach ($eventProvider->popEvents() as $order => $event) {
-                $events[] = [$order, $event];
+                $eventsByOrder[$order][] = $event;
             }
         }
 
-        if (!$events) {
+        if (!$eventsByOrder) {
             return;
         }
 
         $this->clearChangeSets();
-        usort($events, [$this, 'compareEventsOrder']);
+        ksort($eventsByOrder);
 
-        foreach ($events as list(, $event)) {
-            $this->entityManager->getEventManager()->dispatchEvent($event->name(), $event);
+        foreach ($eventsByOrder as $events) {
+            foreach ($events as $event) {
+                $this->entityManager->getEventManager()->dispatchEvent($event->name(), $event);
+            }
         }
     }
 
