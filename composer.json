@@ -1,6 +1,6 @@
 {
     "name": "vanio/doctrine-domain-events",
-    "description": "An extension for Doctrine2 ORM allowing usage of domain events and an ability to call flush inside events triggered by flush.",
+    "description": "An extension for Doctrine2 ORM allowing usage of domain events and an ability to flush inside it's listeners.",
     "keywords": ["doctrine", "doctrine2", "domain events"],
     "homepage": "https://github.com/vaniocz/doctrine-domain-events",
     "license": "MIT",

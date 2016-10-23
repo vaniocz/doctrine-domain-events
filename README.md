@@ -5,8 +5,8 @@
 ![PHP7](https://img.shields.io/badge/php-7-6B7EB9.svg)
 [![License](https://poser.pugx.org/vanio/doctrine-domain-events/license)](https://github.com/vaniocz/doctrine-domain-events/blob/master/LICENSE)
 
-Very lightweight extension for Doctrine2 ORM allowing usage of domain events together with an ability to call flush
-inside it's listeners. This library is inspired in Beberlei's
+Very lightweight extension for Doctrine2 ORM allowing usage of domain events together with an ability to flush inside
+it's listeners. This library is inspired in Beberlei's
 [Doctrine and Domain Events article](http://www.whitewashing.de/2013/07/24/doctrine_and_domainevents.html).
 
 # Installation

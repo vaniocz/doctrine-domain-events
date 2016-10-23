@@ -1,6 +1,7 @@
 <?php
 namespace Vanio\DoctrineDomainEvents;
 
+use Doctrine\Common\EventArgs;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -14,20 +15,40 @@ class DoctrineDomainEventDispatcher implements EventSubscriber
     private $entityManager;
 
     /** @var EventProvider[]  */
-    private $eventProviders;
+    private $eventProviders = [];
 
     public function postFlush(PostFlushEventArgs $event)
     {
         $this->entityManager = $event->getEntityManager();
+        $eventsByOrder = [];
+
+        foreach ($this->entityManager->getUnitOfWork()->getIdentityMap() as $entities) {
+            foreach ($entities as $entity) {
+                $this->keepEventProviders($entity);
+            }
+        }
+
+        foreach ($this->eventProviders as $eventProvider) {
+            foreach ($eventProvider->popEvents() as $order => $event) {
+                $eventsByOrder[$order][] = $event;
+            }
+        }
+
+        $this->clearChangeSets();
+        ksort($eventsByOrder);
+
+        foreach ($eventsByOrder as $events) {
+            foreach ($events as $event) {
+                $this->dispatchEvent($event->name(), $event);
+            }
+        }
+
         $this->eventProviders = [];
-        $this->dispatchEventsOnTransactionEnd();
     }
 
     public function postRemove(LifecycleEventArgs $event)
     {
-        $this->entityManager = $event->getEntityManager();
         $this->keepEventProviders($event->getEntity());
-        $this->dispatchEventsOnTransactionEnd();
     }
 
     public function getSubscribedEvents(): array
@@ -45,43 +66,9 @@ class DoctrineDomainEventDispatcher implements EventSubscriber
         }
     }
 
-    private function dispatchEventsOnTransactionEnd()
+    private function dispatchEvent(string $eventName, EventArgs $event = null)
     {
-        if (!$this->isTransactionEnd()) {
-            return;
-        }
-
-        $eventsByOrder = [];
-
-        foreach ($this->entityManager->getUnitOfWork()->getIdentityMap() as $entities) {
-            foreach ($entities as $entity) {
-                $this->keepEventProviders($entity);
-            }
-        }
-
-        foreach ($this->eventProviders as $eventProvider) {
-            foreach ($eventProvider->popEvents() as $order => $event) {
-                $eventsByOrder[$order][] = $event;
-            }
-        }
-
-        if (!$eventsByOrder) {
-            return;
-        }
-
-        $this->clearChangeSets();
-        ksort($eventsByOrder);
-
-        foreach ($eventsByOrder as $events) {
-            foreach ($events as $event) {
-                $this->entityManager->getEventManager()->dispatchEvent($event->name(), $event);
-            }
-        }
-    }
-
-    private function isTransactionEnd(): bool
-    {
-        return !$this->entityManager->getUnitOfWork()->getScheduledEntityDeletions();
+        $this->entityManager->getEventManager()->dispatchEvent($eventName, $event);
     }
 
     /**
