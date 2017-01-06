@@ -8,13 +8,13 @@
         {"name": "Marek Štípek", "email": "marek.stipek@vanio.cz"}
     ],
     "require": {
-        "php": "7.0.*",
+        "php": "^7.0",
         "doctrine/orm": "^2.5",
         "vanio/stdlib": "^0.1@dev",
         "vanio/type-parser": "^0.1@dev"
     },
     "require-dev": {
-        "doctrine/orm": "dev-master#9da83cf",
+        "doctrine/orm": "^2.5@dev",
         "phpunit/phpunit": "^5.5",
         "symfony/dependency-injection": "^3.0",
         "symfony/config": "^3.0",
