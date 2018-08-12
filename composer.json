@@ -10,7 +10,7 @@
     "require": {
         "php": "^7.0",
         "doctrine/orm": "^2.5",
-        "vanio/stdlib": "^0.1@dev",
+        "vanio/stdlib": "~0.1@dev",
         "vanio/type-parser": "^0.1@dev"
     },
     "require-dev": {
