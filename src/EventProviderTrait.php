@@ -3,19 +3,16 @@ namespace Vanio\DoctrineDomainEvents;
 
 trait EventProviderTrait
 {
-    /** @var int */
-    private static $order = 0;
-
     /** @var DomainEvent[] */
-    private $events = [];
+    private $_events = [];
 
     /**
      * @return DomainEvent[]
      */
     public function popEvents(): array
     {
-        $events = $this->events;
-        $this->events = [];
+        $events = $this->_events;
+        $this->_events = [];
 
         return $events;
     }
@@ -27,6 +24,8 @@ trait EventProviderTrait
      */
     protected function raise($event, array $properties = [])
     {
+        static $order = 0;
+
         if (is_string($event)) {
             $event = new DomainEvent($event, $properties);
         } elseif (!$event instanceof DomainEvent) {
@@ -36,6 +35,6 @@ trait EventProviderTrait
             ));
         }
 
-        $this->events[self::$order++] = $event;
+        $this->_events[$order++] = $event;
     }
 }
