@@ -9,7 +9,7 @@ trait EventProviderTrait
     /**
      * @return DomainEvent[]
      */
-    public function popEvents(): array
+    final public function popEvents(): array
     {
         $events = $this->_events;
         $this->_events = [];
