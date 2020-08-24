@@ -2,15 +2,19 @@
 namespace Vanio\DoctrineDomainEvents\Tests;
 
 use Doctrine\Tests\OrmFunctionalTestCase;
+use PHPUnit\Framework\TestCase;
 use Vanio\DoctrineDomainEvents\DoctrineDomainEventDispatcher;
 use Vanio\DoctrineDomainEvents\DomainEvent;
 use Vanio\DoctrineDomainEvents\Tests\Fixtures\Article;
 use Vanio\DoctrineDomainEvents\Tests\Fixtures\ArticleListener;
 use Vanio\DoctrineDomainEvents\Tests\Fixtures\EditArticleOnPublish;
 
+// Older versions of Doctrine\ORM extend legacy class name
+class_alias(TestCase::class, 'PHPUnit_Framework_TestCase');
+
 class DispatchDomainEventsTest extends OrmFunctionalTestCase
 {
-    /** @var array */
+    /** @var mixed[] */
     protected static $_modelSets = [
         'article' => [Article::class],
     ];

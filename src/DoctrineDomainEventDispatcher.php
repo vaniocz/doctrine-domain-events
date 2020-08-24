@@ -51,12 +51,16 @@ class DoctrineDomainEventDispatcher implements EventSubscriber
         $this->keepEventProviders($event->getEntity());
     }
 
+    /**
+     * @return string[]
+     */
     public function getSubscribedEvents(): array
     {
         return [Events::postFlush, Events::postRemove];
     }
 
     /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
      * @param object $entity
      */
     private function keepEventProviders($entity)
@@ -77,6 +81,7 @@ class DoctrineDomainEventDispatcher implements EventSubscriber
     private function clearChangeSets()
     {
         $clearChangeSets = function () {
+            // phpcs:disable
             $this->entityInsertions = $this->entityUpdates
                 = $this->entityDeletions
                 = $this->extraUpdates
@@ -87,6 +92,7 @@ class DoctrineDomainEventDispatcher implements EventSubscriber
                 = $this->scheduledForSynchronization
                 = $this->orphanRemovals
                 = [];
+            // phpcs:enable
         };
         $clearChangeSets = $clearChangeSets->bindTo($this->entityManager->getUnitOfWork(), UnitOfWork::class);
         $clearChangeSets();

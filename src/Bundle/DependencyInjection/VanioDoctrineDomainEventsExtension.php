@@ -8,6 +8,10 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class VanioDoctrineDomainEventsExtension extends Extension
 {
+    /**
+     * @param mixed[] $configs
+     * @param ContainerBuilder $container
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources'));

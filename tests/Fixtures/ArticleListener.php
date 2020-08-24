@@ -10,6 +10,9 @@ abstract class ArticleListener implements EventSubscriber
 
     abstract public function onArticleRemove(DomainEvent $event);
 
+    /**
+     * @return string[]
+     */
     public function getSubscribedEvents(): array
     {
         return [Article::EVENT_ARTICLE_PUBLISHED, Article::EVENT_ARTICLE_REMOVED];

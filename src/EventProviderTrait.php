@@ -19,8 +19,7 @@ trait EventProviderTrait
 
     /**
      * @param string|DomainEvent $event
-     * @param array $properties
-     * @throws \InvalidArgumentException
+     * @param mixed[] $properties
      */
     protected function raise($event, array $properties = [])
     {

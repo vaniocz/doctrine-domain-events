@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<ruleset name="Vanio Doctrine Generic Types Ruleset">
-    <rule ref="vendor/vanio/coding-standards/ruleset.xml">
-        <exclude name="PSR2.Classes.PropertyDeclaration"/> <!-- because of DispatchDomainEventsTest::$_modelSets -->
-    </rule>
-</ruleset>

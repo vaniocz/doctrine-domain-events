@@ -5,6 +5,7 @@ cache:
         $HOME/.composer/cache/files
 
 php:
+    - 7.0
     - 7.1
 
 install:
@@ -14,7 +15,7 @@ install:
 
 script:
     - php -n ~/.phpenv/versions/$(phpenv version-name)/bin/composer lint
-    - phpunit --coverage-clover build/logs/clover.xml
+    - php -n ~/.phpenv/versions/$(phpenv version-name)/bin/composer test -- --coverage-clover build/logs/clover.xml
 
 after_success:
     - travis_retry php -n vendor/bin/coveralls

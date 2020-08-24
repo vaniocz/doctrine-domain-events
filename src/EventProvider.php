@@ -6,5 +6,5 @@ interface EventProvider
     /**
      * @return DomainEvent[]
      */
-    public function popEvents(): array;
+    function popEvents(): array;
 }

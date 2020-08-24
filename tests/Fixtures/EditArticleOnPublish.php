@@ -24,6 +24,9 @@ class EditArticleOnPublish implements EventSubscriber
         $this->editArticle($event->article);
     }
 
+    /**
+     * @return string[]
+     */
     public function getSubscribedEvents(): array
     {
         return [Article::EVENT_ARTICLE_PUBLISHED];

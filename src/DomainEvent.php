@@ -8,9 +8,13 @@ class DomainEvent extends EventArgs
     /** @var string */
     private $name;
 
-    /** @var array */
+    /** @var mixed[] */
     private $properties;
 
+    /**
+     * @param string $name
+     * @param mixed[] $properties
+     */
     public function __construct(string $name, array $properties = [])
     {
         $this->name = $name;
@@ -25,7 +29,6 @@ class DomainEvent extends EventArgs
     /**
      * @param string $property
      * @return mixed
-     * @throws \RuntimeException
      */
     public function __get(string $property)
     {
