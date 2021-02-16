@@ -8,7 +8,7 @@
         {"name": "Marek Štípek", "email": "marek.stipek@vanio.cz"}
     ],
     "require": {
-        "php": "^7.0",
+        "php": ">=7.0",
         "doctrine/orm": "^2.5",
         "vanio/stdlib": "~0.1@dev",
         "vanio/type-parser": "^0.1@dev"
