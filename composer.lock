@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7466d9592c11e017f9141aedc95832a4",
+    "content-hash": "f239f66d2748054f7eae33de1f5906b5",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -955,22 +955,22 @@
         },
         {
             "name": "vanio/type-parser",
-            "version": "dev-master",
+            "version": "dev-sf5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vaniocz/type-parser.git",
-                "reference": "c9c6b164273dc1594c74b70cb223883ccfd23420"
+                "reference": "5d2936ea52027159faeba26c5cdc4b496695489f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vaniocz/type-parser/zipball/c9c6b164273dc1594c74b70cb223883ccfd23420",
-                "reference": "c9c6b164273dc1594c74b70cb223883ccfd23420",
+                "url": "https://api.github.com/repos/vaniocz/type-parser/zipball/5d2936ea52027159faeba26c5cdc4b496695489f",
+                "reference": "5d2936ea52027159faeba26c5cdc4b496695489f",
                 "shasum": ""
             },
             "require": {
                 "doctrine/annotations": "^1.2",
-                "doctrine/cache": "^1.6",
-                "php": "^7.0"
+                "doctrine/cache": "^1.6|^2.0",
+                "php": ">=7.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.5.14",
@@ -1014,7 +1014,11 @@
                 "type resolver",
                 "var"
             ],
-            "time": "2020-08-24T20:37:10+00:00"
+            "support": {
+                "issues": "https://github.com/vaniocz/type-parser/issues",
+                "source": "https://github.com/vaniocz/type-parser/tree/sf5"
+            },
+            "time": "2022-06-06T06:25:32+00:00"
         }
     ],
     "packages-dev": [
@@ -3491,8 +3495,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.0"
+        "php": ">=7.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.3.0"
 }
