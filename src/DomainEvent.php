@@ -1,24 +1,16 @@
 <?php
+
 namespace Vanio\DoctrineDomainEvents;
 
 use Doctrine\Common\EventArgs;
 
 class DomainEvent extends EventArgs
 {
-    /** @var string */
-    private $name;
-
-    /** @var mixed[] */
-    private $properties;
-
     /**
-     * @param string $name
      * @param mixed[] $properties
      */
-    public function __construct(string $name, array $properties = [])
+    public function __construct(private string $name, private array $properties = [])
     {
-        $this->name = $name;
-        $this->properties = $properties;
     }
 
     public function name(): string
@@ -26,11 +18,7 @@ class DomainEvent extends EventArgs
         return $this->name;
     }
 
-    /**
-     * @param string $property
-     * @return mixed
-     */
-    public function __get(string $property)
+    public function __get(string $property): mixed
     {
         if (!array_key_exists($property, $this->properties)) {
             throw new \RuntimeException(sprintf(

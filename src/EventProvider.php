@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanio\DoctrineDomainEvents;
 
 interface EventProvider
@@ -6,5 +7,5 @@ interface EventProvider
     /**
      * @return DomainEvent[]
      */
-    function popEvents(): array;
+    public function popEvents(): array;
 }

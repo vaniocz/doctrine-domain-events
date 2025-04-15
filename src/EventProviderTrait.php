@@ -1,27 +1,27 @@
 <?php
+
 namespace Vanio\DoctrineDomainEvents;
 
 trait EventProviderTrait
 {
     /** @var DomainEvent[] */
-    private $_events = [];
+    private array $domainEvents = [];
 
     /**
      * @return DomainEvent[]
      */
     final public function popEvents(): array
     {
-        $events = $this->_events;
-        $this->_events = [];
+        $events = $this->domainEvents;
+        $this->domainEvents = [];
 
         return $events;
     }
 
     /**
-     * @param string|DomainEvent $event
      * @param mixed[] $properties
      */
-    protected function raise($event, array $properties = [])
+    protected function raise(string|DomainEvent $event, array $properties = []): void
     {
         static $order = 0;
 
@@ -34,6 +34,6 @@ trait EventProviderTrait
             ));
         }
 
-        $this->_events[$order++] = $event;
+        $this->domainEvents[$order++] = $event;
     }
 }

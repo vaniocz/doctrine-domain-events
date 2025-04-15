@@ -1,25 +1,27 @@
 <?php
+
 namespace Vanio\DoctrineDomainEvents;
 
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\Common\EventArgs;
-use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
+use Doctrine\ORM\Event\PostRemoveEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\UnitOfWork;
 
-class DoctrineDomainEventDispatcher implements EventSubscriber
+#[AsDoctrineListener(event: Events::postFlush, priority: 500, connection: 'default')]
+#[AsDoctrineListener(event: Events::postRemove, priority: 500, connection: 'default')]
+class DoctrineDomainEventDispatcher
 {
-    /** @var EntityManager */
-    private $entityManager;
+    private EntityManager $entityManager;
 
     /** @var EventProvider[]  */
-    private $eventProviders = [];
+    private array $eventProviders = [];
 
-    public function postFlush(PostFlushEventArgs $event)
+    public function postFlush(PostFlushEventArgs $event): void
     {
-        $this->entityManager = $event->getEntityManager();
+        $this->entityManager = $event->getObjectManager();
         $eventsByOrder = [];
 
         foreach ($this->entityManager->getUnitOfWork()->getIdentityMap() as $entities) {
@@ -46,31 +48,23 @@ class DoctrineDomainEventDispatcher implements EventSubscriber
         $this->eventProviders = [];
     }
 
-    public function postRemove(LifecycleEventArgs $event)
+    public function postRemove(PostRemoveEventArgs $event): void
     {
         $this->keepEventProviders($event->getEntity());
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getSubscribedEvents(): array
-    {
-        return [Events::postFlush, Events::postRemove];
     }
 
     /**
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
      * @param object $entity
      */
-    private function keepEventProviders($entity)
+    private function keepEventProviders(object $entity): void
     {
         if ($entity instanceof EventProvider) {
             $this->eventProviders[] = $entity;
         }
     }
 
-    private function dispatchEvent(string $eventName, EventArgs $event = null)
+    private function dispatchEvent(string $eventName, EventArgs $event = null): void
     {
         $this->entityManager->getEventManager()->dispatchEvent($eventName, $event);
     }
@@ -78,7 +72,7 @@ class DoctrineDomainEventDispatcher implements EventSubscriber
     /**
      * This dirty hack provides an ability to safely commit the unit of work inside postFlush event.
      */
-    private function clearChangeSets()
+    private function clearChangeSets(): void
     {
         $clearChangeSets = function () {
             // phpcs:disable
