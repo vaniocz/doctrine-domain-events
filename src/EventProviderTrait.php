@@ -23,8 +23,6 @@ trait EventProviderTrait
      */
     protected function raise($event, array $properties = [])
     {
-        static $order = 0;
-
         if (is_string($event)) {
             $event = new DomainEvent($event, $properties);
         } elseif (!$event instanceof DomainEvent) {
@@ -34,6 +32,6 @@ trait EventProviderTrait
             ));
         }
 
-        $this->_events[$order++] = $event;
+        $this->_events[EventCounter::next()] = $event;
     }
 }
