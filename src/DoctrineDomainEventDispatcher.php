@@ -64,7 +64,7 @@ class DoctrineDomainEventDispatcher
         }
     }
 
-    private function dispatchEvent(string $eventName, EventArgs $event = null): void
+    private function dispatchEvent(string $eventName, ?EventArgs $event = null): void
     {
         $this->entityManager->getEventManager()->dispatchEvent($eventName, $event);
     }
