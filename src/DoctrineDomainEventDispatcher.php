@@ -50,7 +50,7 @@ class DoctrineDomainEventDispatcher
 
     public function postRemove(PostRemoveEventArgs $event): void
     {
-        $this->keepEventProviders($event->getEntity());
+        $this->keepEventProviders($event->getObject());
     }
 
     /**
